@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import {AppContext} from '../context/AppContext'
 import { assets } from '../assets/assets'
+import RelatedDoctors from '../components/RelatedDoctors'
 
 const Appointment = () => {
 
@@ -110,7 +111,7 @@ const Appointment = () => {
       {/* ---------- Booking slots ----------- */}
 
       <div className='sm:ml-72 sm:pl-4 mt-4 font-medium text-gray-700'>
-        <p>Booking slots</p>
+        <p className='text-lg mt-8 mb-7 text-gray-600'>Booking slots</p>
         <div className=' flex gap-3 items-center w-full overflow-x-scroll mt-4'>
           {
             docSlots.length && docSlots.map((item, index) => (
@@ -121,8 +122,22 @@ const Appointment = () => {
             ))
           }
         </div>
+        <div className='flex items-center gap-3 w-full overflow-x-scroll mt-4'>
+          {docSlots.length && docSlots[slotIndex].map((item, index) => (
+            <p onClick={() => setSlotTime(item.time)} className={`text-sm font-light flex-shrink-0 px-5 py-2 rounded-full cursor-pointer ${item.time === slotTime ? "bg-primary text-white" : "text-gray-400 border border-gray-300"}`} key={index}>
+              {item.time.toLowerCase()}
+            </p>
+          ))}
+        </div>
 
+        <button className='bg-primary text-white text-sm font-light px-14 py-3 rounded-full my-6 cursor-pointer'>
+          Book an apppointment
+        </button>
       </div>
+
+      {/* Listing related doctors */}
+
+      <RelatedDoctors docId={docId} speciality={docInfo.speciality} />
 
     </div>
   )
